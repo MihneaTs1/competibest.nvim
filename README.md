@@ -4,11 +4,11 @@
 
 ![Neovim](https://img.shields.io/badge/NeoVim-0.5+-%2357A143.svg?&style=for-the-badge&logo=neovim)
 ![Lua](https://img.shields.io/badge/Lua-%232C2D72.svg?style=for-the-badge&logo=lua)
-![License](https://img.shields.io/github/license/xeluxee/competitest.nvim?style=for-the-badge&logo=gnu)
+![License](https://img.shields.io/github/license/MihneaTs1/competitest.nvim?style=for-the-badge&logo=gnu)
 
 ## Competitive Programming with Neovim made Easy
 
-<!-- ![competitest_old](https://user-images.githubusercontent.com/88047141/147982101-2576e960-372c-4dec-b65e-97191c23a57d.png) -->
+<!-- ![competibest_old](https://user-images.githubusercontent.com/88047141/147982101-2576e960-372c-4dec-b65e-97191c23a57d.png) -->
 ![CompetiBest_popup_ui](https://user-images.githubusercontent.com/88047141/149839002-280069e5-0c71-4aec-8e39-4443a1c44f5c.png)
 *CompetiBest's popup UI*
 
@@ -16,7 +16,7 @@
 *CompetiBest's split UI*
 </div>
 
-`competitest.nvim` is a testcase manager and checker. It saves you time in competitive programming contests by automating common tasks related to testcase management. It can compile, run and test your solutions across all the available testcases, displaying results in a nice interactive user interface.
+`competibest.nvim` is a testcase manager and checker. It saves you time in competitive programming contests by automating common tasks related to testcase management. It can compile, run and test your solutions across all the available testcases, displaying results in a nice interactive user interface.
 
 ## Features
 - Multiple languages supported: it works out of the box with C, C++, Rust, Java and Python, but other languages can be [configured](#customize-compile-and-run-commands)
@@ -38,24 +38,24 @@
 Install with `vim-plug`:
 ``` vim
 Plug 'MunifTanjim/nui.nvim'        " it's a dependency
-Plug 'xeluxee/competitest.nvim'
+Plug 'MihneaTs1/competibest.nvim'
 ```
 
 Install with `packer.nvim`:
 ``` lua
 use {
-	'xeluxee/competitest.nvim',
+	'MihneaTs1/competibest.nvim',
 	requires = 'MunifTanjim/nui.nvim',
-	config = function() require('competitest').setup() end
+	config = function() require('competibest').setup() end
 }
 ```
 
 Install with `lazy.nvim`:
 ``` lua
 {
-	'xeluxee/competitest.nvim',
+	'MihneaTs1/competibest.nvim',
 	dependencies = 'MunifTanjim/nui.nvim',
-	config = function() require('competitest').setup() end,
+	config = function() require('competibest').setup() end,
 }
 ```
 
@@ -64,10 +64,10 @@ If you are using another package manager note that this plugin depends on [`nui.
 ## Usage
 To load this plugin call `setup()`:
 ``` lua
-require('competitest').setup() -- to use default configuration
+require('competibest').setup() -- to use default configuration
 ```
 ``` lua
-require('competitest').setup { -- to customize settings
+require('competibest').setup { -- to customize settings
 	-- put here configuration
 }
 ```
@@ -94,35 +94,35 @@ To see all the available settings see [configuration](#configuration).
 - Of course single file naming can be configured: see `testcases_single_file_format` in [configuration](#configuration)
 - Testcases file can be put in the same folder of the source code file, but you can customize its path (see `testcases_directory` in [configuration](#configuration))
 
-Anyway you can forget about these rules if you use `:CompetiTest add_testcase` and `:CompetiTest edit_testcase`, that handle these things for you.
+Anyway you can forget about these rules if you use `:competibest add_testcase` and `:competibest edit_testcase`, that handle these things for you.
 
 When launching the following commands make sure the focused buffer is the one containing the source code file.
 
 ### Add or Edit a testcase
-Launch `:CompetiTest add_testcase` to add a new testcase.\
-Launch `:CompetiTest edit_testcase` to edit an existing testcase. If you want to specify testcase number directly in the command line you can use `:CompetiTest edit_testcase x`, where `x` is a number representing the testcase you want to edit.
+Launch `:competibest add_testcase` to add a new testcase.\
+Launch `:competibest edit_testcase` to edit an existing testcase. If you want to specify testcase number directly in the command line you can use `:competibest edit_testcase x`, where `x` is a number representing the testcase you want to edit.
 
 To jump between input and output windows press either `<C-h>`, `<C-l>`, or `<C-i>`. To save and close testcase editor press `<C-s>` or `:wq`.
 
 Of course these keybindings can be customized: see `editor_ui` ➤ `normal_mode_mappings` and `editor_ui` ➤ `insert_mode_mappings` in [configuration](#configuration)
 
 ### Remove a testcase
-Launch `:CompetiTest delete_testcase`. If you want to specify testcase number directly in the command line you can use `:CompetiTest delete_testcase x`, where `x` is a number representing the testcase you want to remove.
+Launch `:competibest delete_testcase`. If you want to specify testcase number directly in the command line you can use `:competibest delete_testcase x`, where `x` is a number representing the testcase you want to remove.
 
 ### Convert testcases
 Testcases can be stored in multiple text files or in a single [msgpack](https://msgpack.org/) encoded file.\
-Launch `:CompetiTest convert` to change testcases storage method: you can convert a single file into multiple files or vice versa.
+Launch `:competibest convert` to change testcases storage method: you can convert a single file into multiple files or vice versa.
 One of the following arguments is needed:
 - `singlefile_to_files`: convert a single file into multiple text files
 - `files_to_singlefile`: convert multiple text files into a single file
 - `auto`: if there's a single file convert it into multiple files, otherwise convert multiple files into a single file
 
-**NOTE:** this command only converts already existing testcases files without changing CompetiTest configuration. To choose the storage method to use you have to [configure](#configuration) `testcases_use_single_file` option, that is false by default. Anyway storage method can be automatically detected when option `testcases_auto_detect_storage` is true.
+**NOTE:** this command only converts already existing testcases files without changing competibest configuration. To choose the storage method to use you have to [configure](#configuration) `testcases_use_single_file` option, that is false by default. Anyway storage method can be automatically detected when option `testcases_auto_detect_storage` is true.
 
 ### Run testcases
-Launch `:CompetiTest run`. CompetiTest's interface will appear and you'll be able to view details about a testcase by moving the cursor over its entry. You can close the UI by pressing `q`, `Q` or `:q`.\
-If you're using a compiled language and you don't want to recompile your program launch `:CompetiTest run_no_compile`.\
-If you have previously closed the UI and you want to re-open it without re-executing testcases or recompiling launch `:CompetiTest show_ui`.
+Launch `:competibest run`. competibest's interface will appear and you'll be able to view details about a testcase by moving the cursor over its entry. You can close the UI by pressing `q`, `Q` or `:q`.\
+If you're using a compiled language and you don't want to recompile your program launch `:competibest run_no_compile`.\
+If you have previously closed the UI and you want to re-open it without re-executing testcases or recompiling launch `:competibest show_ui`.
 
 #### Control processes
 - Run again a testcase by pressing `R`
@@ -142,16 +142,16 @@ Of course all these keybindings can be customized: see `runner_ui` ➤ `mappings
 ### Receive testcases, problems and contests
 **NOTE:** to get this feature working you need to install [competitive-companion](https://github.com/jmerle/competitive-companion) extension in your browser.
 
-Thanks to its integration with [competitive-companion](https://github.com/jmerle/competitive-companion), CompetiTest can download contents from competitive programming platforms:
-- Download only testcases with `:CompetiTest receive testcases`
-- Download a problem with `:CompetiTest receive problem` (source file is automatically created along with testcases)
-- Download an entire contest with `:CompetiTest receive contest` (make sure to be on the homepage of the contest, not of a single problem)
+Thanks to its integration with [competitive-companion](https://github.com/jmerle/competitive-companion), competibest can download contents from competitive programming platforms:
+- Download only testcases with `:competibest receive testcases`
+- Download a problem with `:competibest receive problem` (source file is automatically created along with testcases)
+- Download an entire contest with `:competibest receive contest` (make sure to be on the homepage of the contest, not of a single problem)
 
 After launching one of these commands click on the green plus button in your browser to start downloading.\
 For further customization see receive options in [configuration](#configuration).
 
 #### Customize folder structure
-By default CompetiTest stores received problems and contests in current working directory. You can change this behavior through the options `received_problems_path`, `received_contests_directory` and `received_contests_problems_path`. See [receive modifiers](#receive-modifiers) for further details.\
+By default competibest stores received problems and contests in current working directory. You can change this behavior through the options `received_problems_path`, `received_contests_directory` and `received_contests_problems_path`. See [receive modifiers](#receive-modifiers) for further details.\
 Here are some tips:
 - Fixed directory for received problems (not contests):
 	``` lua
@@ -197,10 +197,10 @@ int main() {
 
 ## Configuration
 ### Full configuration
-Here you can find CompetiTest default configuration
+Here you can find competibest default configuration
 ``` lua
-require('competitest').setup {
-	local_config_file_name = ".competitest.lua",
+require('competibest').setup {
+	local_config_file_name = ".competibest.lua",
 
 	floating_border = "rounded",
 	floating_border_highlight = "FloatBorder",
@@ -395,7 +395,7 @@ require('competitest').setup {
 	- `"squish"`: compare stripping extra white spaces and newlines
 	- custom function: you can use a function accepting two arguments, two strings representing output and expected output. It should return true if the given output is acceptable, false otherwise. Example:
 		``` lua
-		require('competitest').setup {
+		require('competibest').setup {
 			output_compare_method = function(output, expected_output)
 				if output == expected_output then
 					return true
@@ -458,9 +458,9 @@ require('competitest').setup {
 - `replace_received_testcases`: this option applies when receiving only testcases. If true replace existing testcases with received ones, otherwise ask user what to do
 
 ### Local configuration
-You can use a different configuration for every different folder by creating a file called `.competitest.lua` (this name can be changed configuring the option `local_config_file_name`). It will affect every file contained in that folder and in subfolders. A table containing valid options must be returned, see the following example.
+You can use a different configuration for every different folder by creating a file called `.competibest.lua` (this name can be changed configuring the option `local_config_file_name`). It will affect every file contained in that folder and in subfolders. A table containing valid options must be returned, see the following example.
 ``` lua
--- .competitest.lua content
+-- .competibest.lua content
 return {
 	multiple_testing = 3,
 	maximum_time = 2500,
@@ -513,7 +513,7 @@ Fields are referred to [received tasks](https://github.com/jmerle/competitive-co
 Languages as C, C++, Rust, Java and Python are supported by default.\
 Of course you can customize commands used for compiling and for running your programs. You can also add languages that aren't supported by default.
 ``` lua
-require('competitest').setup {
+require('competibest').setup {
 	compile_command = {
 		cpp       = { exec = 'g++',           args = {'$(FNAME)', '-o', '$(FNOEXT)'} },
 		some_lang = { exec = 'some_compiler', args = {'$(FNAME)'} },
@@ -588,17 +588,17 @@ layout = {
 </table>
 
 ## Statusline and winbar integration
-When using split UI windows name can be displayed in statusline or in winbar. In each CompetiTest buffer there's a local variable called `competitest_title`, that is a string representing window name. You can get its value using `nvim_buf_get_var(buffer_number, 'competitest_title')`.\
+When using split UI windows name can be displayed in statusline or in winbar. In each competibest buffer there's a local variable called `competibest_title`, that is a string representing window name. You can get its value using `nvim_buf_get_var(buffer_number, 'competibest_title')`.\
 See the [second screenshot](#competitive-programming-with-neovim-made-easy) for an example statusline used with split UI.
 
 ## Highlights
-You can customize CompetiTest highlight groups. Their default values are:
+You can customize competibest highlight groups. Their default values are:
 ``` vim
-hi CompetiTestRunning cterm=bold     gui=bold
-hi CompetiTestDone    cterm=none     gui=none
-hi CompetiTestCorrect ctermfg=green  guifg=#00ff00
-hi CompetiTestWarning ctermfg=yellow guifg=orange
-hi CompetiTestWrong   ctermfg=red    guifg=#ff0000
+hi competibestRunning cterm=bold     gui=bold
+hi competibestDone    cterm=none     gui=none
+hi competibestCorrect ctermfg=green  guifg=#00ff00
+hi competibestWarning ctermfg=yellow guifg=orange
+hi competibestWrong   ctermfg=red    guifg=#ff0000
 ```
 
 ## Roadmap
@@ -637,17 +637,17 @@ Pull Requests are welcome! 🎉
 ## License
 GNU Lesser General Public License version 3 (LGPL v3) or, at your option, any later version
 
-Copyright © 2021-2023 [xeluxee](https://github.com/xeluxee)
+Copyright © 2021-2023 [MihneaTs1](https://github.com/MihneaTs1)
 
-CompetiTest.nvim is free software: you can redistribute it and/or modify
+competibest.nvim is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-CompetiTest.nvim is distributed in the hope that it will be useful,
+competibest.nvim is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
-along with CompetiTest.nvim. If not, see <https://www.gnu.org/licenses/>.
+along with competibest.nvim. If not, see <https://www.gnu.org/licenses/>.

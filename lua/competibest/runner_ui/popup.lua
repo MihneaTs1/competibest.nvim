@@ -44,7 +44,7 @@ function M.compute_layout(config)
 		end
 	end
 
-	local vim_width, vim_height = require("competitest.utils").get_ui_size()
+	local vim_width, vim_height = require("competibest.utils").get_ui_size()
 	local total_width = math.floor(vim_width * config.popup_ui.total_width + 0.5)
 	local total_height = math.floor(vim_height * config.popup_ui.total_height + 0.5)
 	local initial_col = math.floor((vim_width - total_width) / 2 + 0.5)
@@ -69,7 +69,7 @@ function M.init_ui(windows, config)
 		buf_options = {
 			modifiable = false,
 			readonly = false,
-			filetype = "CompetiTest",
+			filetype = "competibest",
 		},
 		win_options = {
 			number = config.runner_ui.selector_show_nu,

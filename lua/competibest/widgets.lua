@@ -1,5 +1,5 @@
 local api = vim.api
-local utils = require("competitest.utils")
+local utils = require("competibest.utils")
 local M = {}
 
 local editor = {} -- testcase editor data
@@ -54,7 +54,7 @@ function M.editor(bufnr, tcnum, input_content, output_content, callback, restore
 		editor.restore_winid = restore_winid
 	end
 
-	local config = require("competitest.config").get_buffer_config(editor.bufnr)
+	local config = require("competibest.config").get_buffer_config(editor.bufnr)
 	local vim_width, vim_height = utils.get_ui_size()
 
 	local popup_width = math.floor(config.editor_ui.popup_width * vim_width)
@@ -82,7 +82,7 @@ function M.editor(bufnr, tcnum, input_content, output_content, callback, restore
 		buf_options = {
 			modifiable = true,
 			readonly = false,
-			filetype = "CompetiTest",
+			filetype = "competibest",
 			buftype = "acwrite",
 		},
 		win_options = {
@@ -100,9 +100,9 @@ function M.editor(bufnr, tcnum, input_content, output_content, callback, restore
 
 	-- mount/open the component
 	editor.output_popup:mount()
-	api.nvim_buf_set_name(editor.output_popup.bufnr, "CompetiTestEditOutput")
+	api.nvim_buf_set_name(editor.output_popup.bufnr, "competibestEditOutput")
 	editor.input_popup:mount()
-	api.nvim_buf_set_name(editor.input_popup.bufnr, "CompetiTestEditInput")
+	api.nvim_buf_set_name(editor.input_popup.bufnr, "competibestEditInput")
 	editor.ui_visible = true
 
 	---Creates mappings in popup buffer following settings specified in config
@@ -201,7 +201,7 @@ function M.picker(bufnr, tctbl, title, callback, restore_winid)
 		picker.restore_winid = restore_winid
 	end
 
-	local config = require("competitest.config").get_buffer_config(picker.bufnr)
+	local config = require("competibest.config").get_buffer_config(picker.bufnr)
 	local vim_width, vim_height = utils.get_ui_size()
 
 	picker.menu = nui_menu({
@@ -221,7 +221,7 @@ function M.picker(bufnr, tctbl, title, callback, restore_winid)
 			height = math.floor(vim_height * config.picker_ui.height),
 		},
 		buf_options = {
-			filetype = "CompetiTest",
+			filetype = "competibest",
 		},
 	}, {
 		lines = picker.menu_items,
@@ -235,7 +235,7 @@ function M.picker(bufnr, tctbl, title, callback, restore_winid)
 	})
 
 	picker.menu:mount()
-	vim.api.nvim_buf_set_name(picker.menu.bufnr, "CompetiTestPicker")
+	vim.api.nvim_buf_set_name(picker.menu.bufnr, "competibestPicker")
 	picker.ui_visible = true
 end
 

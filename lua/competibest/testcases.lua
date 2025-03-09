@@ -1,6 +1,6 @@
 local luv = vim.loop
-local gbc = require("competitest.config").get_buffer_config
-local utils = require("competitest.utils")
+local gbc = require("competibest.config").get_buffer_config
+local utils = require("competibest.utils")
 local M = {
 	single_file = {}, -- methods for loading/writing testcases, for single msgpack-encoded file
 	io_files = {}, -- methods for loading/writing testcases, for pairs of input and output files
@@ -94,7 +94,7 @@ function M.io_files.load(directory, input_file_match, output_file_match)
 			end
 		end
 	end
-	assert(luv.fs_closedir(dir), "CompetiTest.nvim: io_files.load: unable to close '" .. directory .. "'")
+	assert(luv.fs_closedir(dir), "competibest.nvim: io_files.load: unable to close '" .. directory .. "'")
 	return tctbl
 end
 
@@ -122,11 +122,11 @@ function M.io_files.write(directory, tctbl, input_file_format, output_file_forma
 	end
 end
 
----Load testcases from all the pairs of input and output files, using strings with CompetiTest file-format modifiers to determine input and output files name
+---Load testcases from all the pairs of input and output files, using strings with competibest file-format modifiers to determine input and output files name
 ---@param directory string: directory where testcases files are stored
 ---@param filepath string: absolute path of file to which testcases belong, used to evaluate format string
----@param input_file_format string: string with CompetiTest file-format modifiers to match input files name
----@param output_file_format string: string with CompetiTest file-format modifiers to match output files name
+---@param input_file_format string: string with competibest file-format modifiers to match input files name
+---@param output_file_format string: string with competibest file-format modifiers to match output files name
 ---@return table: testcases table, a table made by pairs of input and output strings
 function M.io_files.load_eval_format_string(directory, filepath, input_file_format, output_file_format)
 	local function compute_match(format)
@@ -150,12 +150,12 @@ function M.io_files.load_eval_format_string(directory, filepath, input_file_form
 	return M.io_files.load(directory, input_file_format, output_file_format)
 end
 
----Write testcases on pairs of input and output files, using strings with CompetiTest file-format modifiers to determine input and output files name
+---Write testcases on pairs of input and output files, using strings with competibest file-format modifiers to determine input and output files name
 ---@param directory string: directory where testcases files will be stored
 ---@param tctbl table: testcases table, a table made by pairs of input and output strings
 ---@param filepath string: absolute path of file to which testcases belong, used to evaluate format string
----@param input_file_format string: string with CompetiTest file-format modifiers to match input files name
----@param output_file_format string: string with CompetiTest file-format modifiers to match output files name
+---@param input_file_format string: string with competibest file-format modifiers to match input files name
+---@param output_file_format string: string with competibest file-format modifiers to match output files name
 function M.io_files.write_eval_format_string(directory, tctbl, filepath, input_file_format, output_file_format)
 	local function compute_format(format)
 		local format_string_parts = vim.split(format, "$(TCNUM)", { plain = true })

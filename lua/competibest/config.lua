@@ -1,7 +1,7 @@
 local M = {}
 
 local default_config = {
-	local_config_file_name = ".competitest.lua", -- configuration file name, local to folders
+	local_config_file_name = ".competibest.lua", -- configuration file name, local to folders
 
 	floating_border = "rounded",
 	floating_border_highlight = "FloatBorder",
@@ -15,7 +15,7 @@ local default_config = {
 			submit = { "<cr>" },
 		},
 	},
-	editor_ui = { -- user interface used by CompetiTestAdd and CompetiTestEdit
+	editor_ui = { -- user interface used by competibestAdd and competibestEdit
 		popup_width = 0.4, -- from 0 to 0.5, because there are two popups
 		popup_height = 0.6, -- from 0 to 1
 		show_nu = true, -- show line number
@@ -31,7 +31,7 @@ local default_config = {
 			cancel = "<C-q>",
 		},
 	},
-	runner_ui = { -- user interface used by CompetiTestRun
+	runner_ui = { -- user interface used by competibestRun
 		interface = "popup", -- interface type, can be 'popup' or 'split'
 		selector_show_nu = false, -- show line number in testcase selector window
 		selector_show_rnu = false, -- show relative line number in testcase selector window
@@ -160,7 +160,7 @@ function M.update_config_table(cfg_tbl, opts)
 	-- check deprecated options
 	local function notify_warning(msg)
 		vim.schedule(function()
-			vim.notify("CompetiTest.nvim: " .. msg, vim.log.levels.WARN, { title = "CompetiTest" })
+			vim.notify("competibest.nvim: " .. msg, vim.log.levels.WARN, { title = "competibest" })
 		end)
 	end
 	]]
@@ -180,7 +180,7 @@ function M.update_config_table(cfg_tbl, opts)
 	return new_config
 end
 
--- CompetiTest configuration after setup() is called
+-- competibest configuration after setup() is called
 M.current_setup = nil
 
 -- Table to store buffer configs
@@ -190,7 +190,7 @@ M.buffer_configs = {}
 ---@param directory string
 ---@return table | nil: table containing local configuration, or nil when it's absent or incorrect
 function M.load_local_config(directory)
-	local utils = require("competitest.utils")
+	local utils = require("competibest.utils")
 	local prev_len
 	while prev_len ~= #directory do
 		prev_len = #directory

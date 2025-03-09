@@ -1,14 +1,14 @@
 local luv = vim.loop
 local M = {}
 
----Show a CompetiTest notification with vim.notify()
+---Show a competibest notification with vim.notify()
 ---@param msg string: message to display
 ---@param log_level string | nil: a log level among the ones available in vim.log.levels. When nil it defaults to ERROR
 function M.notify(msg, log_level)
-	vim.notify("CompetiTest.nvim: " .. msg, vim.log.levels[log_level or "ERROR"], { title = "CompetiTest" })
+	vim.notify("competibest.nvim: " .. msg, vim.log.levels[log_level or "ERROR"], { title = "competibest" })
 end
 
----Convert a string with CompetiTest modifiers into a formatted string
+---Convert a string with competibest modifiers into a formatted string
 ---@param str string: the string to format
 ---@param modifiers table: table associating modifiers name to a string or a function accepting up to one argument
 ---@param argument any: argument of function modifiers
@@ -48,7 +48,7 @@ function M.format_string_modifiers(str, modifiers, argument)
 	return table.concat(evaluated_str)
 end
 
--- CompetiTest file-format modifiers
+-- competibest file-format modifiers
 -- They can be strings or function accepting up to one argument, the absolute file path
 M.file_format_modifiers = {
 	-- $(): replace it with a dollar
@@ -88,7 +88,7 @@ M.file_format_modifiers = {
 	["TCNUM"] = nil,
 }
 
----Convert a string with CompetiTest file-format modifiers into a formatted string
+---Convert a string with competibest file-format modifiers into a formatted string
 ---@param filepath string: absolute file path, to evaluate string from
 ---@param str string: the string to evaluate
 ---@return string | nil: the converted string, or nil on failure
@@ -96,7 +96,7 @@ function M.eval_string(filepath, str)
 	return M.format_string_modifiers(str, M.file_format_modifiers, filepath)
 end
 
----Convert a string with CompetiTest file-format modifiers into a formatted string, but considering the given buffer
+---Convert a string with competibest file-format modifiers into a formatted string, but considering the given buffer
 ---@param bufnr integer: buffer number, representing the buffer to evaluate string from
 ---@param str string: the string to evaluate
 ---@param tcnum integer | string | nil: testcase number or identifier
@@ -121,9 +121,9 @@ function M.load_file_as_string(filepath)
 	if fd == nil then
 		return nil
 	end
-	local stat = assert(luv.fs_fstat(fd), "CompetiTest.nvim: load_file_as_string: cannot stat file '" .. filepath .. "'")
-	local content = assert(luv.fs_read(fd, stat.size, 0), "CompetiTest.nvim: load_file_as_string: cannot read file '" .. filepath .. "'")
-	assert(luv.fs_close(fd), "CompetiTest.nvim: load_file_as_string: unable to close '" .. filepath .. "'")
+	local stat = assert(luv.fs_fstat(fd), "competibest.nvim: load_file_as_string: cannot stat file '" .. filepath .. "'")
+	local content = assert(luv.fs_read(fd, stat.size, 0), "competibest.nvim: load_file_as_string: cannot read file '" .. filepath .. "'")
+	assert(luv.fs_close(fd), "competibest.nvim: load_file_as_string: unable to close '" .. filepath .. "'")
 	return string.gsub(content, "\r\n", "\n") -- convert CRLF to LF
 end
 
@@ -137,7 +137,7 @@ function M.create_directory(dirpath)
 			M.create_directory(upper_dir)
 		end
 		if not luv.fs_opendir(dirpath) then -- handle single and double dot in paths
-			assert(luv.fs_mkdir(dirpath, 493), "CompetiTest.nvim: create_directory: cannot create directory '" .. dirpath .. "'")
+			assert(luv.fs_mkdir(dirpath, 493), "competibest.nvim: create_directory: cannot create directory '" .. dirpath .. "'")
 		end
 	end
 end
@@ -147,15 +147,15 @@ end
 ---@param content string
 function M.write_string_on_file(filepath, content)
 	M.create_directory(vim.fn.fnamemodify(filepath, ":h"))
-	local fd = assert(luv.fs_open(filepath, "w", 420), "CompetiTest.nvim: write_string_on_file: cannot open file '" .. filepath .. "'")
-	assert(luv.fs_write(fd, content, 0), "CompetiTest.nvim: write_string_on_file: cannot write on file '" .. filepath .. "'")
-	assert(luv.fs_close(fd), "CompetiTest.nvim: write_string_on_file: unable to close '" .. filepath .. "'")
+	local fd = assert(luv.fs_open(filepath, "w", 420), "competibest.nvim: write_string_on_file: cannot open file '" .. filepath .. "'")
+	assert(luv.fs_write(fd, content, 0), "competibest.nvim: write_string_on_file: cannot write on file '" .. filepath .. "'")
+	assert(luv.fs_close(fd), "competibest.nvim: write_string_on_file: unable to close '" .. filepath .. "'")
 end
 
 ---Delete the given file
 ---@param filepath string
 function M.delete_file(filepath)
-	assert(luv.fs_unlink(filepath), "CompetiTest.nvim: delete_file: cannot delete file '" .. filepath .. "'")
+	assert(luv.fs_unlink(filepath), "competibest.nvim: delete_file: cannot delete file '" .. filepath .. "'")
 end
 
 ---Get Neovim UI width and height

@@ -1,11 +1,11 @@
 local api = vim.api
-local config = require("competitest.config")
-local testcases = require("competitest.testcases")
-local utils = require("competitest.utils")
-local widgets = require("competitest.widgets")
+local config = require("competibest.config")
+local testcases = require("competibest.testcases")
+local utils = require("competibest.utils")
+local widgets = require("competibest.widgets")
 local M = {}
 
----Handle CompetiTest subcommands
+---Handle competibest subcommands
 ---@param args string: command line arguments
 function M.command(args)
 	args = vim.split(args, " ", { plain = true, trimempty = true })
@@ -236,7 +236,7 @@ end
 ---Start testcases runner
 ---@param testcases_list table | nil: list with integers representing testcases to run, or nil to run all the testcases
 ---@param compile boolean: whether to compile or not
----@param only_show boolean: if true show previously closed CompetiTest windows without executing testcases
+---@param only_show boolean: if true show previously closed competibest windows without executing testcases
 function M.run_testcases(testcases_list, compile, only_show)
 	local bufnr = api.nvim_get_current_buf()
 	config.load_buffer_config(bufnr)
@@ -256,12 +256,12 @@ function M.run_testcases(testcases_list, compile, only_show)
 	end
 
 	if not M.runners[bufnr] then -- no runner is associated to buffer
-		M.runners[bufnr] = require("competitest.runner"):new(api.nvim_get_current_buf())
+		M.runners[bufnr] = require("competibest.runner"):new(api.nvim_get_current_buf())
 		if not M.runners[bufnr] then -- an error occurred
 			return
 		end
 		-- remove runner data when buffer is unloaded
-		api.nvim_command("autocmd BufUnload <buffer=" .. bufnr .. "> lua require('competitest.commands').remove_runner(vim.fn.expand('<abuf>'))")
+		api.nvim_command("autocmd BufUnload <buffer=" .. bufnr .. "> lua require('competibest.commands').remove_runner(vim.fn.expand('<abuf>'))")
 	end
 	local r = M.runners[bufnr] -- current runner
 	if not only_show then
@@ -275,7 +275,7 @@ end
 ---Receive testcases, problems or contests from Competitive Companion
 ---@param mode string: can be "testcases", "problem" or "contest"
 function M.receive(mode)
-	local receive = require("competitest.receive")
+	local receive = require("competibest.receive")
 
 	---Get path for received problems or contests
 	---@param path string | function: see received_problems_path, received_contests_directory and received_contests_problems_path

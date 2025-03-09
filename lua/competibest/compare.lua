@@ -1,4 +1,4 @@
-local utils = require("competitest.utils")
+local utils = require("competibest.utils")
 local M = {}
 
 -- Methods to determine if result is correct

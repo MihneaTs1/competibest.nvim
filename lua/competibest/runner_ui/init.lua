@@ -1,6 +1,6 @@
 local api = vim.api
 local nui_event = require("nui.utils.autocmd").event
-local utils = require("competitest.utils")
+local utils = require("competibest.utils")
 
 local RunnerUI = {}
 RunnerUI.__index = RunnerUI
@@ -35,9 +35,9 @@ function RunnerUI:new(runner)
 
 	local interface = runner.config.runner_ui.interface
 	if interface == "popup" then
-		this.interface = require("competitest.runner_ui.popup")
+		this.interface = require("competibest.runner_ui.popup")
 	elseif interface == "split" then
-		this.interface = require("competitest.runner_ui.split")
+		this.interface = require("competibest.runner_ui.split")
 	else
 		utils.notify("RunnerUI:new: unrecognized user interface " .. vim.inspect(interface) .. ".")
 		return nil
@@ -78,8 +78,8 @@ function RunnerUI:show_ui()
 		}
 		for n, w in pairs(self.windows) do
 			if n ~= "vw" then
-				api.nvim_buf_set_var(w.bufnr, "competitest_title", windows_names[n])
-				api.nvim_buf_set_name(w.bufnr, "CompetiTest" .. string.gsub(windows_names[n], " ", "") .. w.bufnr)
+				api.nvim_buf_set_var(w.bufnr, "competibest_title", windows_names[n])
+				api.nvim_buf_set_name(w.bufnr, "competibest" .. string.gsub(windows_names[n], " ", "") .. w.bufnr)
 			end
 		end
 
@@ -282,7 +282,7 @@ function RunnerUI:show_viewer_popup(window_name)
 	end
 
 	local function get_viewer_popup_title()
-		return " " .. api.nvim_buf_get_var(get_viewer_buffer(), "competitest_title") .. " "
+		return " " .. api.nvim_buf_get_var(get_viewer_buffer(), "competibest_title") .. " "
 	end
 
 	if window_name then

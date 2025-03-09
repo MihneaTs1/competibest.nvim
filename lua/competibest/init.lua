@@ -1,7 +1,7 @@
-local config = require("competitest.config")
+local config = require("competibest.config")
 local M = {}
 
----Setup CompetiTest
+---Setup competibest
 ---@param opts table | nil: a table containing user configuration
 function M.setup(opts)
 	config.current_setup = config.update_config_table(config.current_setup, opts)
@@ -9,7 +9,7 @@ function M.setup(opts)
 	if not config.current_setup.loaded then
 		config.current_setup.loaded = true
 
-		-- CompetiTest command
+		-- competibest command
 		vim.cmd([[
 		function! s:command_completion(_, CmdLine, CursorPos) abort
 			let prefix = a:CmdLine[:a:CursorPos]
@@ -34,36 +34,36 @@ function M.setup(opts)
 			endif
 			return ""
 		endfunction
-		command! -bar -nargs=* -complete=custom,s:command_completion CompetiTest lua require("competitest.commands").command(<q-args>)
+		command! -bar -nargs=* -complete=custom,s:command_completion competibest lua require("competibest.commands").command(<q-args>)
 		]])
 
 		-- create highlight groups
 		M.setup_highlight_groups()
-		vim.api.nvim_command("autocmd ColorScheme * lua require('competitest').setup_highlight_groups()")
+		vim.api.nvim_command("autocmd ColorScheme * lua require('competibest').setup_highlight_groups()")
 
 		-- resize ui autocommand
-		vim.api.nvim_command("autocmd VimResized * lua require('competitest').resize_ui()")
+		vim.api.nvim_command("autocmd VimResized * lua require('competibest').resize_ui()")
 	end
 end
 
----Resize CompetiTest user interface if visible
+---Resize competibest user interface if visible
 function M.resize_ui()
 	vim.schedule(function()
-		require("competitest.widgets").resize_widgets()
-		for _, r in pairs(require("competitest.commands").runners) do
+		require("competibest.widgets").resize_widgets()
+		for _, r in pairs(require("competibest.commands").runners) do
 			r:resize_ui()
 		end
 	end)
 end
 
----Create CompetiTest highlight groups
+---Create competibest highlight groups
 function M.setup_highlight_groups()
 	local highlight_groups = {
-		{ "CompetiTestRunning", "cterm=bold gui=bold" },
-		{ "CompetiTestDone", "cterm=none gui=none" },
-		{ "CompetiTestCorrect", "ctermfg=green guifg=#00ff00" },
-		{ "CompetiTestWarning", "ctermfg=yellow guifg=orange" },
-		{ "CompetiTestWrong", "ctermfg=red guifg=#ff0000" },
+		{ "competibestRunning", "cterm=bold gui=bold" },
+		{ "competibestDone", "cterm=none gui=none" },
+		{ "competibestCorrect", "ctermfg=green guifg=#00ff00" },
+		{ "competibestWarning", "ctermfg=yellow guifg=orange" },
+		{ "competibestWrong", "ctermfg=red guifg=#ff0000" },
 	}
 	for _, hl in ipairs(highlight_groups) do
 		vim.api.nvim_command("hi! def " .. hl[1] .. " " .. hl[2])

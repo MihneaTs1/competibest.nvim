@@ -1,8 +1,8 @@
 local api = vim.api
 local luv = vim.loop
-local config = require("competitest.config")
-local utils = require("competitest.utils")
-local ui = require("competitest.runner_ui")
+local config = require("competibest.config")
+local utils = require("competibest.utils")
+local ui = require("competibest.runner_ui")
 
 local TCRunner = {}
 TCRunner.__index = TCRunner
@@ -82,7 +82,7 @@ function TCRunner:run_testcases(tctbl, compile)
 	-- reset running data
 	for _, tc in pairs(self.tcdata) do
 		tc.status = ""
-		tc.hlgroup = "CompetiTestRunning"
+		tc.hlgroup = "competibestRunning"
 		tc.stdout = nil
 		tc.stderr = nil
 		tc.running = false
@@ -174,18 +174,18 @@ function TCRunner:execute_testcase(tcindex, exec, args, dir, callback)
 		if tc.killed then
 			if tc.timelimit and tc.time >= tc.timelimit then
 				tc.status = "TIMEOUT"
-				tc.hlgroup = "CompetiTestWrong"
+				tc.hlgroup = "competibestWrong"
 			else
 				tc.status = "KILLED"
-				tc.hlgroup = "CompetiTestWarning"
+				tc.hlgroup = "competibestWarning"
 			end
 		else
 			if tc.exit_signal ~= 0 then
 				tc.status = "SIG " .. tc.exit_signal
-				tc.hlgroup = "CompetiTestWarning"
+				tc.hlgroup = "competibestWarning"
 			elseif tc.exit_code ~= 0 then
 				tc.status = "RET " .. tc.exit_code
-				tc.hlgroup = "CompetiTestWarning"
+				tc.hlgroup = "competibestWarning"
 			end -- correct/wrong/done status is computed when stdout is closed
 		end
 
@@ -204,7 +204,7 @@ function TCRunner:execute_testcase(tcindex, exec, args, dir, callback)
 	if not process.handle then
 		utils.notify("TCRunner:execute_testcase: failed to spawn process using '" .. process.exec .. "' (" .. process.pid .. ").")
 		tc.status = "FAILED"
-		tc.hlgroup = "CompetiTestWarning"
+		tc.hlgroup = "competibestWarning"
 		tc.time = -1
 		self:update_ui(true)
 		return
@@ -232,20 +232,20 @@ function TCRunner:execute_testcase(tcindex, exec, args, dir, callback)
 			if not tc.running and tc.status ~= "RUNNING" then
 				return
 			end
-			local correct = require("competitest.compare").compare_output(
+			local correct = require("competibest.compare").compare_output(
 				table.concat(tc.stdout, "\n"),
 				tc.expout and table.concat(tc.expout, "\n"),
 				self.config.output_compare_method
 			)
 			if correct == true then
 				tc.status = "CORRECT"
-				tc.hlgroup = "CompetiTestCorrect"
+				tc.hlgroup = "competibestCorrect"
 			elseif correct == false then
 				tc.status = "WRONG"
-				tc.hlgroup = "CompetiTestWrong"
+				tc.hlgroup = "competibestWrong"
 			else
 				tc.status = "DONE"
-				tc.hlgroup = "CompetiTestDone"
+				tc.hlgroup = "competibestDone"
 			end
 			self:update_ui(true)
 		else
@@ -278,7 +278,7 @@ function TCRunner:execute_testcase(tcindex, exec, args, dir, callback)
 	process.starting_time = luv.now()
 	tc.process = process
 	tc.status = "RUNNING"
-	tc.hlgroup = "CompetiTestRunning"
+	tc.hlgroup = "competibestRunning"
 	tc.running = true
 	tc.killed = false
 	self:update_ui(true)

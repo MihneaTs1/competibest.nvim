@@ -14,7 +14,7 @@ function M.init_ui(windows, config, init_winid)
 		buf_options = {
 			modifiable = false,
 			readonly = false,
-			filetype = "CompetiTest",
+			filetype = "competibest",
 		},
 		win_options = {
 			number = config.runner_ui.selector_show_nu,
@@ -94,7 +94,7 @@ function M.init_ui(windows, config, init_winid)
 	local total_width = vim.api.nvim_win_get_width(init_winid)
 	local total_height = vim.api.nvim_win_get_height(init_winid)
 	if config.split_ui.relative_to_editor then
-		total_width, total_height = require("competitest.utils").get_ui_size()
+		total_width, total_height = require("competibest.utils").get_ui_size()
 	end
 	total_width = math.floor(total_width * config.split_ui.total_width + 0.5)
 	total_height = math.floor(total_height * config.split_ui.total_height + 0.5)

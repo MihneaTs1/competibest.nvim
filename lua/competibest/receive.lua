@@ -1,9 +1,9 @@
 local luv = vim.loop
-local testcases = require("competitest.testcases")
-local utils = require("competitest.utils")
+local testcases = require("competibest.testcases")
+local utils = require("competibest.utils")
 local M = {}
 
----Convert a string with CompetiTest receive modifiers into a formatted string
+---Convert a string with competibest receive modifiers into a formatted string
 ---@param str string: the string to evaluate
 ---@param task table: table with received task data
 ---@param file_extension string
@@ -148,7 +148,7 @@ end
 ---@param filepath string: source file absolute path
 ---@param confirm_overwriting boolean: whether to ask user to overwrite an already existing file or not
 ---@param task table: table with all task details
----@param cfg table: table containing CompetiTest configuration
+---@param cfg table: table containing competibest configuration
 function M.store_problem_config(filepath, confirm_overwriting, task, cfg)
 	if confirm_overwriting and utils.does_file_exist(filepath) then
 		local choice = vim.fn.confirm('Do you want to overwrite "' .. filepath .. '"?', "Yes\nNo")
