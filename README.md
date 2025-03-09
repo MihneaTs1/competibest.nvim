@@ -143,7 +143,7 @@ Of course all these keybindings can be customized: see `runner_ui` ➤ `mappings
 **NOTE:** to get this feature working you need to install [competitive-companion](https://github.com/jmerle/competitive-companion) extension in your browser.
 
 Thanks to its integration with [competitive-companion](https://github.com/jmerle/competitive-companion), competibest can download contents from competitive programming platforms:
-- Download a problem with `:Competibest receive problem` (source file is automatically created along with testcases)
+- Download a problem with `:Competibest receive` (source file is automatically created along with testcases)
 
 After launching one of these commands click on the green plus button in your browser to start downloading.\
 For further customization see receive options in [configuration](#configuration).
