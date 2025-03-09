@@ -99,19 +99,19 @@ Anyway you can forget about these rules if you use `:competibest add_testcase` a
 When launching the following commands make sure the focused buffer is the one containing the source code file.
 
 ### Add or Edit a testcase
-Launch `:competibest add_testcase` to add a new testcase.\
-Launch `:competibest edit_testcase` to edit an existing testcase. If you want to specify testcase number directly in the command line you can use `:competibest edit_testcase x`, where `x` is a number representing the testcase you want to edit.
+Launch `:Competibest add_testcase` to add a new testcase.\
+Launch `:Competibest edit_testcase` to edit an existing testcase. If you want to specify testcase number directly in the command line you can use `:competibest edit_testcase x`, where `x` is a number representing the testcase you want to edit.
 
 To jump between input and output windows press either `<C-h>`, `<C-l>`, or `<C-i>`. To save and close testcase editor press `<C-s>` or `:wq`.
 
 Of course these keybindings can be customized: see `editor_ui` ➤ `normal_mode_mappings` and `editor_ui` ➤ `insert_mode_mappings` in [configuration](#configuration)
 
 ### Remove a testcase
-Launch `:competibest delete_testcase`. If you want to specify testcase number directly in the command line you can use `:competibest delete_testcase x`, where `x` is a number representing the testcase you want to remove.
+Launch `:Competibest delete_testcase`. If you want to specify testcase number directly in the command line you can use `:competibest delete_testcase x`, where `x` is a number representing the testcase you want to remove.
 
 ### Convert testcases
 Testcases can be stored in multiple text files or in a single [msgpack](https://msgpack.org/) encoded file.\
-Launch `:competibest convert` to change testcases storage method: you can convert a single file into multiple files or vice versa.
+Launch `:Competibest convert` to change testcases storage method: you can convert a single file into multiple files or vice versa.
 One of the following arguments is needed:
 - `singlefile_to_files`: convert a single file into multiple text files
 - `files_to_singlefile`: convert multiple text files into a single file
@@ -120,7 +120,7 @@ One of the following arguments is needed:
 **NOTE:** this command only converts already existing testcases files without changing competibest configuration. To choose the storage method to use you have to [configure](#configuration) `testcases_use_single_file` option, that is false by default. Anyway storage method can be automatically detected when option `testcases_auto_detect_storage` is true.
 
 ### Run testcases
-Launch `:competibest run`. competibest's interface will appear and you'll be able to view details about a testcase by moving the cursor over its entry. You can close the UI by pressing `q`, `Q` or `:q`.\
+Launch `:Competibest run`. competibest's interface will appear and you'll be able to view details about a testcase by moving the cursor over its entry. You can close the UI by pressing `q`, `Q` or `:q`.\
 If you're using a compiled language and you don't want to recompile your program launch `:competibest run_no_compile`.\
 If you have previously closed the UI and you want to re-open it without re-executing testcases or recompiling launch `:competibest show_ui`.
 
@@ -143,9 +143,9 @@ Of course all these keybindings can be customized: see `runner_ui` ➤ `mappings
 **NOTE:** to get this feature working you need to install [competitive-companion](https://github.com/jmerle/competitive-companion) extension in your browser.
 
 Thanks to its integration with [competitive-companion](https://github.com/jmerle/competitive-companion), competibest can download contents from competitive programming platforms:
-- Download only testcases with `:competibest receive testcases`
-- Download a problem with `:competibest receive problem` (source file is automatically created along with testcases)
-- Download an entire contest with `:competibest receive contest` (make sure to be on the homepage of the contest, not of a single problem)
+- Download only testcases with `:Competibest receive testcases`
+- Download a problem with `:Competibest receive problem` (source file is automatically created along with testcases)
+- Download an entire contest with `:Competibest receive contest` (make sure to be on the homepage of the contest, not of a single problem)
 
 After launching one of these commands click on the green plus button in your browser to start downloading.\
 For further customization see receive options in [configuration](#configuration).
