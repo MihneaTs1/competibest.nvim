@@ -1,4 +1,4 @@
-# CompetiTest.nvim
+# CompetiBest.nvim
 
 <div align="center">
 
@@ -9,11 +9,11 @@
 ## Competitive Programming with Neovim made Easy
 
 <!-- ![competitest_old](https://user-images.githubusercontent.com/88047141/147982101-2576e960-372c-4dec-b65e-97191c23a57d.png) -->
-![competitest_popup_ui](https://user-images.githubusercontent.com/88047141/149839002-280069e5-0c71-4aec-8e39-4443a1c44f5c.png)
-*CompetiTest's popup UI*
+![CompetiBest_popup_ui](https://user-images.githubusercontent.com/88047141/149839002-280069e5-0c71-4aec-8e39-4443a1c44f5c.png)
+*CompetiBest's popup UI*
 
-![competitest_split_ui](https://user-images.githubusercontent.com/88047141/183751179-e07e2a4d-e2eb-468b-ba34-bb737cba4557.png)
-*CompetiTest's split UI*
+![CompetiBest_split_ui](https://user-images.githubusercontent.com/88047141/183751179-e07e2a4d-e2eb-468b-ba34-bb737cba4557.png)
+*CompetiBest's split UI*
 </div>
 
 `competitest.nvim` is a testcase manager and checker. It saves you time in competitive programming contests by automating common tasks related to testcase management. It can compile, run and test your solutions across all the available testcases, displaying results in a nice interactive user interface.
