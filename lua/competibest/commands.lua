@@ -72,7 +72,7 @@ function M.command(args)
 			end
 		end,
 		receive = function()
-			if check_subargs(1, 1) then
+			if check_subargs(0, 0) then
 				M.receive(args[2])
 			end
 		end,
@@ -87,7 +87,7 @@ function M.command(args)
 end
 
 ---Start testcase editor to add a new testcase or to edit a testcase that already exists
----@param add_testcase boolean: if true a new testcases will be added, otherwise edit a testcase that already exists
+---@param add_testcase boolean: if true a new testcase will be added, otherwise edit an existing testcase
 ---@param tcnum integer | nil: testcase number
 function M.edit_testcase(add_testcase, tcnum)
 	local bufnr = api.nvim_get_current_buf()
@@ -272,13 +272,13 @@ function M.run_testcases(testcases_list, compile, only_show)
 	r:show_ui()
 end
 
----Receive testcases, problems or contests from Competitive Companion
----@param mode string: can be "testcases", "problem" or "contest"
-function M.receive(mode)
+---Receive a problem from Competitive Companion
+---@param mode string: should be "problem"
+function M.receive()
 	local receive = require("competibest.receive")
 
-	---Get path for received problems or contests
-	---@param path string | function: see received_problems_path, received_contests_directory and received_contests_problems_path
+	---Get path for received problems
+	---@param path string | function: see received_problems_path
 	---@param task table: table with received task data
 	---@param file_extension string
 	---@return string
@@ -292,64 +292,24 @@ function M.receive(mode)
 		return init_dir or ""
 	end
 
-	if mode == "testcases" then
-		local bufnr = api.nvim_get_current_buf()
-		config.load_buffer_config(bufnr)
-		local bufcfg = config.get_buffer_config(bufnr)
-		local notify_string = bufcfg.receive_print_message and "testcases" or nil
-		receive.receive(bufcfg.companion_port, true, notify_string, function(tasks)
-			receive.store_testcases(bufnr, tasks[1].tests, bufcfg.testcases_use_single_file, bufcfg.replace_received_testcases)
-		end)
-	elseif mode == "problem" then
-		local setup = config.current_setup
-		local notify_string = setup.receive_print_message and "problem" or nil
-		receive.receive(setup.companion_port, true, notify_string, function(tasks)
-			widgets.input(
-				"Choose problem path",
-				eval_path(setup.received_problems_path, tasks[1], setup.received_files_extension),
-				setup.floating_border,
-				not setup.received_problems_prompt_path,
-				function(filepath)
-					local cfg = config.load_local_config_and_extend(vim.fn.fnamemodify(filepath, ":h"))
-					receive.store_problem_config(filepath, true, tasks[1], cfg)
-					if cfg.open_received_problems then
-						api.nvim_command("edit " .. vim.fn.fnameescape(filepath))
-					end
+	local setup = config.current_setup
+	local notify_string = setup.receive_print_message and "problem" or nil
+	receive.receive(setup.companion_port, true, notify_string, function(tasks)
+		widgets.input(
+			"Choose problem path",
+			eval_path(setup.received_problems_path, tasks[1], setup.received_files_extension),
+			setup.floating_border,
+			not setup.received_problems_prompt_path,
+			function(filepath)
+				local cfg = config.load_local_config_and_extend(vim.fn.fnamemodify(filepath, ":h"))
+				receive.store_problem_config(filepath, true, tasks[1], cfg)
+				if cfg.open_received_problems then
+					api.nvim_command("edit " .. vim.fn.fnameescape(filepath))
 				end
-			)
-		end)
-	elseif mode == "contest" then
-		local setup = config.current_setup
-		local notify_string = setup.receive_print_message and "contest" or nil
-		receive.receive(setup.companion_port, false, notify_string, function(tasks)
-			widgets.input(
-				"Choose contest directory",
-				eval_path(setup.received_contests_directory, tasks[1], setup.received_files_extension),
-				setup.floating_border,
-				not setup.received_contests_prompt_directory,
-				function(directory)
-					local cfg = config.load_local_config_and_extend(directory)
-					widgets.input(
-						"Choose files extension",
-						cfg.received_files_extension,
-						cfg.floating_border,
-						not cfg.received_contests_prompt_extension,
-						function(file_extension)
-							for _, task in ipairs(tasks) do
-								local filepath = directory .. "/" .. eval_path(cfg.received_contests_problems_path, task, file_extension)
-								receive.store_problem_config(filepath, true, task, cfg)
-								if cfg.open_received_contests then
-									api.nvim_command("edit " .. vim.fn.fnameescape(filepath))
-								end
-							end
-						end
-					)
-				end
-			)
-		end)
-	else
-		utils.notify("receive: unrecognized mode '" .. tostring(mode) .. "'.")
-	end
+			end
+		)
+	end)
 end
 
 return M
+
