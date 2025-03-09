@@ -143,9 +143,7 @@ Of course all these keybindings can be customized: see `runner_ui` ➤ `mappings
 **NOTE:** to get this feature working you need to install [competitive-companion](https://github.com/jmerle/competitive-companion) extension in your browser.
 
 Thanks to its integration with [competitive-companion](https://github.com/jmerle/competitive-companion), competibest can download contents from competitive programming platforms:
-- Download only testcases with `:Competibest receive testcases`
 - Download a problem with `:Competibest receive problem` (source file is automatically created along with testcases)
-- Download an entire contest with `:Competibest receive contest` (make sure to be on the homepage of the contest, not of a single problem)
 
 After launching one of these commands click on the green plus button in your browser to start downloading.\
 For further customization see receive options in [configuration](#configuration).
@@ -156,14 +154,6 @@ Here are some tips:
 - Fixed directory for received problems (not contests):
 	``` lua
 	received_problems_path = "$(HOME)/Competitive Programming/$(JUDGE)/$(CONTEST)/$(PROBLEM).$(FEXT)"
-	```
-- Fixed directory for received contests:
-	``` lua
-	received_contests_directory = "$(HOME)/Competitive Programming/$(JUDGE)/$(CONTEST)"
-	```
-- Put every problem of a contest in a different directory:
-	``` lua
-	received_contests_problems_path = "$(PROBLEM)/main.$(FEXT)"
 	```
 - Example of file naming for Java contests:
 	``` lua
