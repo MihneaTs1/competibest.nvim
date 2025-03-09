@@ -94,20 +94,20 @@ To see all the available settings see [configuration](#configuration).
 - Of course single file naming can be configured: see `testcases_single_file_format` in [configuration](#configuration)
 - Testcases file can be put in the same folder of the source code file, but you can customize its path (see `testcases_directory` in [configuration](#configuration))
 
-Anyway you can forget about these rules if you use `:competibest add_testcase` and `:competibest edit_testcase`, that handle these things for you.
+Anyway you can forget about these rules if you use `:Competibest add_testcase` and `:Competibest edit_testcase`, that handle these things for you.
 
 When launching the following commands make sure the focused buffer is the one containing the source code file.
 
 ### Add or Edit a testcase
 Launch `:Competibest add_testcase` to add a new testcase.\
-Launch `:Competibest edit_testcase` to edit an existing testcase. If you want to specify testcase number directly in the command line you can use `:competibest edit_testcase x`, where `x` is a number representing the testcase you want to edit.
+Launch `:Competibest edit_testcase` to edit an existing testcase. If you want to specify testcase number directly in the command line you can use `:Competibest edit_testcase x`, where `x` is a number representing the testcase you want to edit.
 
 To jump between input and output windows press either `<C-h>`, `<C-l>`, or `<C-i>`. To save and close testcase editor press `<C-s>` or `:wq`.
 
 Of course these keybindings can be customized: see `editor_ui` ➤ `normal_mode_mappings` and `editor_ui` ➤ `insert_mode_mappings` in [configuration](#configuration)
 
 ### Remove a testcase
-Launch `:Competibest delete_testcase`. If you want to specify testcase number directly in the command line you can use `:competibest delete_testcase x`, where `x` is a number representing the testcase you want to remove.
+Launch `:Competibest delete_testcase`. If you want to specify testcase number directly in the command line you can use `:Competibest delete_testcase x`, where `x` is a number representing the testcase you want to remove.
 
 ### Convert testcases
 Testcases can be stored in multiple text files or in a single [msgpack](https://msgpack.org/) encoded file.\
@@ -121,8 +121,8 @@ One of the following arguments is needed:
 
 ### Run testcases
 Launch `:Competibest run`. competibest's interface will appear and you'll be able to view details about a testcase by moving the cursor over its entry. You can close the UI by pressing `q`, `Q` or `:q`.\
-If you're using a compiled language and you don't want to recompile your program launch `:competibest run_no_compile`.\
-If you have previously closed the UI and you want to re-open it without re-executing testcases or recompiling launch `:competibest show_ui`.
+If you're using a compiled language and you don't want to recompile your program launch `:Competibest run_no_compile`.\
+If you have previously closed the UI and you want to re-open it without re-executing testcases or recompiling launch `:Competibest show_ui`.
 
 #### Control processes
 - Run again a testcase by pressing `R`
