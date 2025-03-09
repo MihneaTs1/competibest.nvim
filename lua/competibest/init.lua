@@ -34,7 +34,7 @@ function M.setup(opts)
 			endif
 			return ""
 		endfunction
-		command! -bar -nargs=* -complete=custom,s:command_completion competibest lua require("competibest.commands").command(<q-args>)
+		command! -bar -nargs=* -complete=custom,s:command_completion Competibest lua require("competibest.commands").command(<q-args>)
 		]])
 
 		-- create highlight groups
