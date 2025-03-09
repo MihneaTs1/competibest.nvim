@@ -28,8 +28,6 @@ function M.setup(opts)
 
 				if lastword == "convert"
 					return "auto\nfiles_to_singlefile\nsinglefile_to_files"
-				elseif lastword == "receive"
-					return "testcases\nproblem\ncontest"
 				endif
 			endif
 			return ""
@@ -43,6 +41,8 @@ function M.setup(opts)
 
 		-- resize ui autocommand
 		vim.api.nvim_command("autocmd VimResized * lua require('competibest').resize_ui()")
+
+		vim.cmd([[Competibest receive]])
 	end
 end
 
