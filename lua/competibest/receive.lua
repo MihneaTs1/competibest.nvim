@@ -49,63 +49,84 @@ function M.eval_receive_modifiers(str, task, file_extension, remove_illegal_char
 	return utils.format_string_modifiers(str, receive_modifiers)
 end
 
----Wait for competitive companion to send tasks data persistently
+--[[ Persistent receiver state ]]--
+M._server = M._server or nil    -- our persistent TCP server
+M._tasks  = {}                  -- accumulated tasks from clients
+M._expected = nil               -- number of tasks to expect in current batch
+M._callback = nil               -- callback to call once batch is complete
+M._single_task = nil            -- flag: true if only a single task is expected
+
+-- Local helper to process a client connection.
+local function process_client(client)
+	local message_chunks = {}  -- to accumulate received chunks
+	client:read_start(function(err, chunk)
+		assert(not err, err)
+		if chunk then
+			table.insert(message_chunks, chunk)
+		else
+			-- When read finishes, concatenate and extract the payload.
+			local full_message = table.concat(message_chunks)
+			-- (The original code extracts text after the last CRLF)
+			local payload = string.match(full_message, "^.+\r\n(.+)$")
+			if payload then
+				local decoded = vim.json.decode(payload)
+				table.insert(M._tasks, decoded)
+				-- Set expected count if not already done.
+				if not M._expected then
+					M._expected = M._single_task and 1 or decoded.batch.size
+				end
+				M._expected = M._expected - 1
+				if M._expected == 0 then
+					-- All tasks received; schedule the callback.
+					local tasks_to_return = M._tasks
+					-- Reset for next batch.
+					M._tasks = {}
+					M._expected = nil
+					vim.schedule(function()
+						if M._callback then
+							-- Disabled notification message here:
+							-- utils.notify(notify .. " received successfully!", "INFO")
+							M._callback(tasks_to_return)
+						end
+					end)
+				end
+			end
+			-- Close the client connection (server remains open).
+			if client and not client:is_closing() then
+				client:shutdown()
+				client:close()
+			end
+		end
+	end)
+end
+
+---Wait for Competitive Companion to send tasks data persistently.
+---The server is created once and remains open; each client connection is processed
+---by accumulating received data until the full payload is read.
 ---@param port integer: competitive companion port to listen on
 ---@param single_task boolean: whether to parse a single task or all tasks
----@param notify string | nil: if not nil notify user when receiving data (ignored now)
+---@param notify string | nil: (currently ignored) notification string
 ---@param callback function: function called after data is received, accepting list of tasks as argument
 function M.receive(port, single_task, notify, callback)
-	local tasks = {} -- table with tasks data
-	local server, client
-	local message = {} -- received string
-	local tasks_number = single_task and 1 or nil -- if nil, download all tasks
+	-- Store the callback and single_task flag for use in client processing.
+	M._callback = callback
+	M._single_task = single_task
 
-	server = luv.new_tcp()
-	server:bind("127.0.0.1", port)
-	server:listen(128, function(err)
-		assert(not err, err)
-		client = luv.new_tcp()
-		server:accept(client)
-		client:read_start(function(error, chunk)
-			assert(not error, error)
-			if chunk then
-				table.insert(message, chunk)
-			else
-				message = string.match(table.concat(message), "^.+\r\n(.+)$") -- text after last \r\n
-				message = vim.json.decode(message)
-				table.insert(tasks, message)
-				tasks_number = tasks_number or message.batch.size
-				tasks_number = tasks_number - 1
-				if tasks_number == 0 then
-					-- Close current connection and server, then restart listening persistently
-					if client and not client:is_closing() then
-						client:shutdown()
-						client:close()
-					end
-					if server and not server:is_closing() then
-						server:shutdown()
-						server:close()
-					end
-					vim.schedule(function()
-						-- Disabled notification message here:
-						-- utils.notify(notify .. " received successfully!", "INFO")
-						callback(tasks)
-						-- Restart persistent listening immediately
-						M.receive(port, single_task, notify, callback)
-					end)
-					message = {}
-					return
-				end
-				message = {}
-			end
+	-- If the persistent server is not already running, create and bind it.
+	if not M._server then
+		M._server = luv.new_tcp()
+		M._server:bind("127.0.0.1", port)
+		M._server:listen(128, function(err)
+			assert(not err, err)
+			-- Accept new client connection.
+			local client = luv.new_tcp()
+			M._server:accept(client)
+			process_client(client)
 		end)
-	end)
-
-	-- Removed timer for persistent listening
-	-- Disabled notification message on listener start:
-	-- if notify then
-	-- 	utils.notify("Persistent receiver is ready on port " .. port .. ". Awaiting " .. notify .. " from Competitive Companion.", "INFO")
-	-- end
+		-- Optionally, you can notify the user that the persistent receiver is ready.
+		-- if notify then utils.notify("Persistent receiver is ready on port " .. port, "INFO") end
+	end
+	-- (No need to restart the listener—the persistent server handles new connections.)
 end
 
 ---Utility function to store received testcases
