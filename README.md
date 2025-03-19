@@ -4,7 +4,16 @@
 
 ![Neovim](https://img.shields.io/badge/NeoVim-0.5+-%2357A143.svg?&style=for-the-badge&logo=neovim)
 ![Lua](https://img.shields.io/badge/Lua-%232C2D72.svg?style=for-the-badge&logo=lua)
-![License](https://img.shields.io/github/license/MihneaTs1/competibest.nvim?style=for-the-badge&logo=gnu)
+![License](https://img.shields.io/github/license/MihneaTs1/competitest.nvim?style=for-the-badge&logo=gnu)
+
+## Competitive Programming with Neovim made Easy
+
+<!-- ![competibest_old](https://user-images.githubusercontent.com/88047141/147982101-2576e960-372c-4dec-b65e-97191c23a57d.png) -->
+![CompetiBest_popup_ui](https://user-images.githubusercontent.com/88047141/149839002-280069e5-0c71-4aec-8e39-4443a1c44f5c.png)
+*CompetiBest's popup UI*
+
+![CompetiBest_split_ui](https://user-images.githubusercontent.com/88047141/183751179-e07e2a4d-e2eb-468b-ba34-bb737cba4557.png)
+*CompetiBest's split UI*
 
 </div>
 
